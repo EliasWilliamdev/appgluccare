@@ -26,3 +26,4 @@ dist-ssr
 # Environment files (do not commit secrets)
 .env
 .env.*
+.trae/documents/Melhorias de UI_UX com shadcn e ícones.md

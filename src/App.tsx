@@ -5,6 +5,8 @@ import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import Home from './pages/Home'
 import { useAuth } from './auth/AuthContext'
+import { AppToaster } from './components/ui/toaster'
+import { AppHeader } from './components/AppHeader'
 
 function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => (localStorage.getItem('theme') as 'dark' | 'light') || 'dark')
@@ -24,7 +26,7 @@ function App() {
     if (!show) return null
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center px-6 backdrop-blur-xl bg-black/40">
-        <div className="max-w-xl w-full rounded-2xl border border-white/20 bg-white/10 dark:bg-neutral-900/50 shadow-2xl p-6 text-neutral-800 dark:text-neutral-100">
+        <div className="max-w-xl w-full rounded-2xl border border-white/20 bg-white/95 dark:bg-neutral-800/95 shadow-2xl p-6 text-neutral-800 dark:text-neutral-100 transition-colors duration-300">
           <h2 className="text-2xl font-semibold mb-3">Aviso Legal/Médico</h2>
           <p className="text-sm opacity-90">
             Este aplicativo é uma ferramenta de acompanhamento e não substitui aconselhamento médico profissional,
@@ -54,13 +56,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-fuchsia-500 to-orange-400 dark:from-[#0f172a] dark:via-[#0b1328] dark:to-[#020617]">
-      <div className="fixed top-4 right-4 z-50">
-        <button className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 text-white hover:scale-105 active:scale-95 transition duration-200" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-          <span className="text-xs">{theme === 'dark' ? 'Dark' : 'Light'}</span>
-        </button>
-      </div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-fuchsia-500 to-orange-400 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white transition-colors duration-300">
       <BrowserRouter>
+        <AppHeader theme={theme} setTheme={setTheme} />
         <Disclaimer />
         <Routes>
           <Route path="/login" element={<SignIn />} />
@@ -70,6 +68,7 @@ function App() {
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
+      <AppToaster />
     </div>
   )
 }
